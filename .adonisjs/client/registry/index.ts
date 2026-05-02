@@ -42,6 +42,18 @@ const routes = {
     tokens: [{"old":"/logout","type":0,"val":"logout","end":""}],
     types: placeholder as Registry['session.destroy']['types'],
   },
+  'auth.register': {
+    methods: ["POST"],
+    pattern: '/api/register',
+    tokens: [{"old":"/api/register","type":0,"val":"api","end":""},{"old":"/api/register","type":0,"val":"register","end":""}],
+    types: placeholder as Registry['auth.register']['types'],
+  },
+  'auth.login': {
+    methods: ["POST"],
+    pattern: '/api/login',
+    tokens: [{"old":"/api/login","type":0,"val":"api","end":""},{"old":"/api/login","type":0,"val":"login","end":""}],
+    types: placeholder as Registry['auth.login']['types'],
+  },
 } as const satisfies Record<string, AdonisEndpoint>
 
 export { routes }

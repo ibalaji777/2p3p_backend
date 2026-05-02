@@ -28,3 +28,29 @@ router
     router.post('logout', [controllers.Session, 'destroy'])
   })
   .use(middleware.auth())
+
+// ==========================================
+// API Routes
+// ==========================================
+router
+  .group(() => {
+    // Public API routes
+    router.post('register', [controllers.Auth, 'register'])
+    router.post('login', [controllers.Auth, 'login'])
+
+    // Protected API routes (requires authentication)
+    router
+      .group(() => {
+        // Admin only route
+        router.get('admin/dashboard', async () => {
+          return { message: 'Welcome to the Admin Dashboard' }
+        }).use(middleware.role(['admin']))
+
+        // Customer route (accessible by both customer and admin)
+        router.get('customer/profile', async () => {
+          return { message: 'Welcome to the Customer Profile' }
+        }).use(middleware.role(['customer', 'admin']))
+      })
+      .use(middleware.auth())
+  })
+  .prefix('api')

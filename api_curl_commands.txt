@@ -1,0 +1,27 @@
+# 1. Register an Admin
+curl -X POST http://localhost:3333/api/register \
+  -H "Content-Type: application/json" \
+  -d "{ \"fullName\": \"Admin User\", \"email\": \"admin@example.com\", \"password\": \"password123\", \"role\": \"admin\" }"
+
+# 2. Register a Customer
+curl -X POST http://localhost:3333/api/register \
+  -H "Content-Type: application/json" \
+  -d "{ \"fullName\": \"John Doe\", \"email\": \"customer@example.com\", \"password\": \"password123\", \"role\": \"customer\" }"
+
+# 3. Login
+# Use the token returned from this command for the protected routes below
+curl -X POST http://localhost:3333/api/login \
+  -H "Content-Type: application/json" \
+  -d "{ \"email\": \"admin@example.com\", \"password\": \"password123\" }"
+
+# 4. Access Admin Dashboard (Protected - Admin Only)
+# Replace <your_token_here> with the token from the login response
+curl -X GET http://localhost:3333/api/admin/dashboard \
+  -H "Authorization: Bearer <your_token_here>" \
+  -H "Accept: application/json"
+
+# 5. Access Customer Profile (Protected - Customer or Admin)
+# Replace <your_token_here> with the token from the login response
+curl -X GET http://localhost:3333/api/customer/profile \
+  -H "Authorization: Bearer <your_token_here>" \
+  -H "Accept: application/json"
